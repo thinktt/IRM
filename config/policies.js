@@ -48,12 +48,4 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
-
-  IncidentController: {
-    '*': false,
-    find: 'sessionAuth'
-  }
-
-
-
 };
