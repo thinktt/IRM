@@ -15,25 +15,15 @@ module.exports = {
   		required: true
   	},
 
-  	date: {
-  		type: 'date'
-  	},
-
-  	time:  {
-  		type: 'time'
-  	},
-
   	worker: {
-  		type: 'string'
+  		model: 'worker',
+      required: true
   	},
 
-  	workerID : {
-  		type: 'string'
-  	},
-
-  	fromLab: {
-  		type: 'string'
-  	},
+    comments: {
+      collection: 'comment',
+      via: 'incident'
+    },
 
   	station: {
   		type: 'string'
@@ -75,7 +65,7 @@ module.exports = {
   		type: 'string'
   	},
 
-  	metingDate: {
+  	meetingDate: {
   		type: 'string'
   	},
 

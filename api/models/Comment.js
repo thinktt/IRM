@@ -7,18 +7,16 @@
 
 module.exports = {
 
+	schema: true,
+
   attributes: {
   	by: {
   		model: 'user' //User ID
   	},
 
-  	date: {
-  		type: 'date' 
+  	incident: {
+  		model: 'incident'
   	},
- 		
- 		time: {
- 			type: 'time'
- 		},
 
  		subject: {
  			type: 'string'

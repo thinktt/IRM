@@ -6,8 +6,25 @@
 */
 
 module.exports = {
+	schema: true,
 
   attributes: {
+  	lab: {
+  		type: 'string'
+  	},
+  	
+  	name: {
+  		type: 'string'
+  	},
+
+  	schedulerID: {
+  		type: 'number'
+  	},
+
+  	incidents: {
+  		collection: 'incident',
+  		via: 'worker'
+  	}
 
   }
 };
