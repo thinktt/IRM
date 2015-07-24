@@ -26,10 +26,14 @@ module.exports = {
 					username: username,
 					encryptedPassword: encryptedPassword,
 					email: email
-				}, function(err, newUser){
-					if(err) return res.negotiate(err); 
-					//user is created
-					res.send(newUser);
+				}, function(err, user){
+					if(err) {
+						return res.negotiate(err);
+					} else {
+						//store in session and return stripped down user info
+						req.session.me = _.pick(user, ['firstName', 'id', 'lab']);
+						res.ok(req.session.me);
+					} 
 				});
 			}
 		
@@ -40,10 +44,11 @@ module.exports = {
 		var username = req.param('username');
 		var password = req.param('password');
 
-		User.findOne({username: username})
+		User
+		.findOne({username: username})
 		.then(function(user) {
 
-			if(!user) return res.notFound('user not found');
+			if(!user) return res.notFound({status: 'user not found'});
 
 			require('machinepack-passwords').checkPassword({
 				passwordAttempt: password,
@@ -55,32 +60,39 @@ module.exports = {
 				},
 
 				success: function() {
-					req.session.me = user.id;
-					res.ok('user validated');
+						//store stripped down user info in session and return it
+						req.session.me = _.pick(user, ['firstName', 'id', 'lab']);
+						res.ok(req.session.me);
 				},
 				
 				incorrect: function() {
-					res.notFound('bad password'); 
+					res.notFound({status: 'bad password'}); 
 				}
 			});
 
 		})
 		.catch(function(err) {
-			console.log('catching error');
 			res.negotiate(err); 
 		});
 	},
 
 	signOut: function(req, res) {
 		req.session.destroy(function(err){
-			if(err) return res.negotiate(err); 
-			return res.ok('user signed out');
+			if(err) {
+				return res.negotiate(err);
+			} else {
+				return res.ok({status: 'user signed out'});
+			}
 		});
 	},
 
 	checkUserStatus: function(req, res) {
-		if (!req.session.me) return res.ok('not signed in'); 
-		return res.ok('signed in');
+		if (!req.session.me) {
+			return res.ok({status: 'not signed in'});
+		} else {
+			//if session.me exist then return it 
+			return res.ok(req.session.me);
+		} 
 	},
 
 	getBasicData: function(req, res) {
