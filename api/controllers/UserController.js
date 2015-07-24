@@ -93,28 +93,6 @@ module.exports = {
 			//if session.me exist then return it 
 			return res.ok(req.session.me);
 		} 
-	},
-
-	getBasicData: function(req, res) {
-		if (!req.session.me) {
-			return res.ok('not signed in'); 
-		}
-		else {
-			User
-			.findOne({id: req.session.me})
-			.then(function(user){
-				if(_.isEmpty(user)) {
-					return res.notFound('No such user'); 
-				} else {
-					//strip out exess user data and password info!!
-					user = _.pick(user, ['firstName', 'id', 'lab']);
-					return res.ok(user);
-				}
-			}) 
-			.catch(function(err){
-			res.negotiate(err); 
-		});
-		}
 	}
 
 	
