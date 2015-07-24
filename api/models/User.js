@@ -25,6 +25,13 @@ module.exports = {
   },
 
   attributes: {
+    firstName: {
+      type: 'string'
+    },
+
+    lastName: {
+      type: 'string'
+    },
 
   	username: {
   		type: 'string',
@@ -49,7 +56,11 @@ module.exports = {
   		lowercase: true,
   		unique: true,
       emailNotInDB: true
-   	}
+   	},
+
+    lab: {
+      model: 'lab'
+    }
 
 
   },

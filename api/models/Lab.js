@@ -1,30 +1,32 @@
 /**
-* Worker.js
+* Lab.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
 module.exports = {
-	schema: true,
 
   attributes: {
-  	lab: {
-  		model: 'lab'
-  	},
   	
   	name: {
   		type: 'string'
   	},
 
-  	schedulerID: {
-  		type: 'number'
+  	stations: {
+  		collection: 'station',
+  		via: 'lab' 
   	},
 
-  	incidents: {
-  		collection: 'incident',
-  		via: 'worker'
-  	}
+  	// users: {
+  	// 	collection: 'user',
+  	// 	via: 'lab'
+  	// },
+
+  	// workers: {
+  	// 	collection: 'worker',
+  	// 	via: 'lab'
+  	// }
 
   }
 };
